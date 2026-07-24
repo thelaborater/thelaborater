@@ -106,3 +106,62 @@ linear-gradient(145deg,#90a4ae,#d7ccc8)}
   .game-dialogue,.choice-panel{left:50%;right:auto;transform:translateX(-50%);width:min(680px,88vw)}
   .seat-grid{left:20%;right:20%;gap:20px 14px}.seat{height:92px}
 }
+
+
+/* v5 提示系統 */
+.hint-overlay{
+  position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:18px;
+  background:rgba(0,0,0,.72);backdrop-filter:blur(7px)
+}
+.hint-menu-card,.notebook-card{
+  position:relative;width:min(430px,92vw);max-height:88svh;overflow:auto;
+  border-radius:22px;padding:24px 20px;background:#17110d;color:#fff;
+  border:1px solid rgba(245,198,91,.55);box-shadow:0 22px 70px rgba(0,0,0,.55)
+}
+.hint-title{font-size:1.25rem;font-weight:1000;color:#f4ca65;text-align:center;margin-bottom:17px}
+.hint-small{font-size:.84rem;color:#cbbba6;text-align:center;margin:-4px 0 17px}
+.hint-menu-buttons{display:grid;gap:10px}
+.hint-menu-buttons button,.hint-confirm,.hint-back,.secondary-answer-btn{
+  border:1px solid #9d7638;border-radius:13px;padding:13px 14px;
+  background:#f7e7bb;color:#3d2505;font-weight:900
+}
+.hint-close{
+  position:absolute;right:10px;top:8px;width:38px;height:38px;border:0;border-radius:50%;
+  background:rgba(255,255,255,.08);color:#fff;font-size:1.6rem;line-height:1
+}
+.notebook-card{
+  background:
+    repeating-linear-gradient(0deg,transparent 0 29px,rgba(87,117,145,.15) 29px 30px),
+    #f5edda;color:#342c24;border-color:#c9ac72
+}
+.notebook-card h2{text-align:center;color:#6f4d1f;margin:0 38px 18px}
+.handwriting{
+  font-family:"Kaiti TC","DFKai-SB","標楷體","Bradley Hand",cursive;
+  font-size:1.03rem;line-height:1.95;white-space:normal;padding:9px 6px 18px
+}
+.answer-note{font-size:1.45rem;text-align:center;font-weight:900;color:#9d6413}
+.hint-back{display:block;width:100%;margin-top:16px}
+.seat-hint-photo{
+  min-height:270px;border:10px solid #fff;background:
+  linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),
+  radial-gradient(ellipse at 50% 75%,#8f1515 0 18%,#340606 19% 36%,transparent 37%),
+  linear-gradient(#1b1715,#42302a);
+  box-shadow:0 8px 22px rgba(0,0,0,.25);display:grid;place-items:center
+}
+.seat-hint-chair{color:#fff;background:rgba(0,0,0,.65);padding:12px;border-radius:10px}
+.secondary-answer-btn{width:100%;margin-top:10px;background:transparent;color:#f3d68d}
+.rolling-error{color:#ff5c5c;text-align:center;margin:8px 0;font-weight:900}
+
+/* 單一角色對話時固定置中 */
+.conversation-scene .character-center{
+  left:50%!important;right:auto!important;transform:translateX(-50%)!important
+}
+
+/* 爆米花提示按鈕更明顯 */
+.hint-popcorn{animation:hintBob 1.8s ease-in-out infinite}
+@keyframes hintBob{50%{transform:translateY(-4px) rotate(4deg)}}
+
+@media(max-width:520px){
+  .hint-menu-card,.notebook-card{padding:22px 16px}
+  .handwriting{font-size:.98rem}
+}
