@@ -1,41 +1,189 @@
 window.GAME_DATA = {
-  meta:{title:"POP UP！爆米花去哪裡？",version:"0.2.0",scope:"協尋網站至第18影廳"},
-  qr:{START:"start",CONTACT:"contact",THEATER:"theater_hub_1",HALL18:"findings"},
-  scenes:[
-    {id:"start",type:"missing_home"},
-    {id:"corn_1",type:"phone_dialogue",speaker:"寇恩",text:"⋯⋯您好？",reply:"你好，是帕普家的小兒子嗎？",next:"corn_2"},
-    {id:"corn_2",type:"phone_dialogue",speaker:"寇恩",text:"我是帕普寇恩沒錯，請問你們是？",teamInput:true,next:"corn_3"},
-    {id:"corn_3",type:"phone_dialogue",speaker:"你們",text:"我們是 {{team}}，是來幫你尋找你的家人的。",reply:"送出訊息",next:"corn_4"},
-    {id:"corn_4",type:"phone_dialogue",speaker:"寇恩",text:"真的嗎？太感謝你們了！你們有找到什麼線索嗎？",reply:"目前沒有，我們打算到光之電影院找找看有什麼線索",next:"corn_5"},
-    {id:"corn_5",type:"phone_dialogue",speaker:"寇恩",text:"很有道理，我也正打算過去，那我們等等在光之電影院見面嗎？",reply:"沒問題",next:"open_box"},
-    {id:"open_box",type:"confirm",scene:"轉場",title:"前往光之電影院",text:"請打開盒子，進入光之電影院。",button:"我已進入光之電影院",next:"theater_hub_1"},
-    {id:"theater_hub_1",type:"answer",kicker:"光之電影院",title:"要與誰進行對話？",prompt:"請輸入角色名稱：",answers:["哈斗哥","哈鬥哥","hotdog"],next:"hotdog_1",success:"你走向驗票口。"},
-    {id:"hotdog_1",type:"dialogue",scene:"光之電影院",speaker:"哈斗哥",text:"現在開放進場的是近期熱映的香港電影《沒有人付錢》！",next:"hotdog_2"},
-    {id:"hotdog_2",type:"dialogue",scene:"光之電影院",speaker:"寇恩",text:"我們想來問有關我家米花的事情！",next:"hotdog_3"},
-    {id:"hotdog_3",type:"dialogue",scene:"光之電影院",speaker:"哈斗哥",text:"哎呀！狗沒拿賽！我也很想幫忙，但你們這樣沒頭沒尾地問，我實在不知道怎麼幫助你們。",next:"hotdog_4"},
-    {id:"hotdog_4",type:"dialogue",scene:"光之電影院",speaker:"你們",text:"你對昨天來看電影的爆米花有印象嗎？",next:"hotdog_5"},
-    {id:"hotdog_5",type:"dialogue",scene:"光之電影院",speaker:"哈斗哥",text:"有啊！他們就是一群白白的可愛小傢伙，聞起來有焦糖、巧克力、起司、奶油的味道。",next:"hotdog_6"},
-    {id:"hotdog_6",type:"dialogue",scene:"光之電影院",speaker:"寇恩",text:"那請您讓我進去，我自己去找！",next:"hotdog_7"},
-    {id:"hotdog_7",type:"dialogue",scene:"光之電影院",speaker:"哈斗哥",text:"呀勒呀勒！不可以得斯！要進去的話一定得買票才行！",next:"theater_hub_2"},
-    {id:"theater_hub_2",type:"answer",kicker:"光之電影院",title:"要與誰進行對話？",prompt:"請輸入角色名稱：",answers:["丘洛","churro"],next:"churro_1",success:"你走向售票口。"},
-    {id:"churro_1",type:"dialogue",scene:"光之電影院",speaker:"丘洛",text:"歡迎來光之電影院，幾位？要看什麼電影？",next:"churro_2"},
-    {id:"churro_2",type:"dialogue",scene:"光之電影院",speaker:"寇恩",text:"請問妳有看到我的家米花嗎？",next:"churro_3"},
-    {id:"churro_3",type:"dialogue",scene:"光之電影院",speaker:"丘洛",text:"啊？誰知道你家拿棒是誰啊？",next:"churro_4"},
-    {id:"churro_4",type:"dialogue",scene:"光之電影院",speaker:"寇恩",text:"那妳知道昨天的爆米花看了什麼電影嗎？",next:"churro_5"},
-    {id:"churro_5",type:"dialogue",scene:"光之電影院",speaker:"丘洛",text:"拜託，我怎麼會知道？你知道一整天下來，來看電影的爆米花有幾顆嗎？",next:"churro_6"},
-    {id:"churro_6",type:"dialogue",scene:"光之電影院",speaker:"你們",text:"丘洛小姐，能不能請妳提供一些線索？寇恩真的很著急想要找到他的家人。",next:"churro_7"},
-    {id:"churro_7",type:"dialogue",scene:"光之電影院",speaker:"丘洛",text:"好吧。這裡有一張電影簡介表，也許你們能從中找看看有沒有什麼線索。",next:"movie_title"},
-    {id:"movie_title",type:"answer",kicker:"電影推理",title:"他們看了哪一部電影？",prompt:"請輸入電影名稱：",answers:["幸福的甜蜜滋味","《幸福的甜蜜滋味》"],next:"movie_time",success:"片名正確。"},
-    {id:"movie_time",type:"answer",kicker:"電影推理",title:"他們看的是哪一個場次？",prompt:"請輸入場次時間：",answers:["17:20","1720","下午5:20","下午5點20分"],next:"ticket_dialogue",success:"場次正確。"},
-    {id:"ticket_dialogue",type:"dialogue",scene:"光之電影院",speaker:"丘洛",text:"……他們在第18影廳。這裡有電影票，給驗票口那傢伙，他應該就會讓你們進去了。",next:"hall_answer"},
-    {id:"hall_answer",type:"answer",kicker:"驗票口",title:"爆米花們在哪個影廳？",prompt:"請輸入影廳：",answers:["18","第18影廳","18影廳"],next:"ticket_stubs",success:"答案正確。"},
-    {id:"ticket_stubs",type:"confirm",scene:"光之電影院",title:"獲得票根",text:"哈斗哥想起昨天第18影廳的觀眾全是爆米花，並交給你們一些票根。票根記錄了觀眾的座位與攜帶物品。",button:"進入第18影廳",next:"findings"},
-    {id:"findings",type:"answer",kicker:"第18影廳",title:"壓下觀眾席座位",prompt:"座位下方出現了什麼訊息？",answers:["FINDINGS"],next:"missing_items",success:"座位底下出現了帕普一家遺留的物品。"},
-    {id:"missing_items",type:"multi",kicker:"第18影廳",title:"找出每位爆米花遺失的物品",fields:[["葛蘭德","管家守則"],["巴柏","泡泡保鮮膜"],["蘿莉","迷宮手札"],["希可","雪花蒐集冊"],["希波","量杯"],["史塔兒","星座大全"],["平","編舞筆記"],["烏拉","貼紙"]],next:"search_theater"},
-    {id:"search_theater",type:"answer",kicker:"第18影廳",title:"把整個電影院翻遍",prompt:"觀眾席底部還黏著什麼？",answers:["膠卷","菲林片","菲林膠卷","菲林膠片","膠片"],next:"boats",success:"這看起來是電影的膠片。"},
-    {id:"boats",type:"answer",kicker:"第18影廳",title:"修復膠片上的字母",prompt:"請輸入你看到的五個英文字母：",answers:["BOATS"],next:"curtain",success:"BOATS——Based On A True Story。"},
-    {id:"curtain",type:"confirm",scene:"第18影廳",title:"電影即將開演",text:"請將盒內的紅色帷幕卡片抽出。",button:"我已拉開紅色帷幕",next:"rolling"},
-    {id:"rolling",type:"answer",kicker:"第18影廳",title:"播放電影",prompt:"欲播放請說出：",answers:["ROLLING"],next:"end",success:"銀幕的白光向外擴散——"},
-    {id:"end",type:"ending",title:"前段試玩完成",text:"你們已完成協尋網站、光之電影院與第18影廳。下一章將從方摩西城堡宴會廳開始。"}
+  "meta": {
+    "title": "POP UP！爆米花去哪裡？",
+    "version": "0.3.0",
+    "scope": "協尋網站至取得電影簡介表"
+  },
+  "scenes": [
+    {
+      "id": "start",
+      "type": "missing_home"
+    },
+    {
+      "id": "corn_1",
+      "type": "phone_dialogue",
+      "speaker": "寇恩",
+      "text": "⋯⋯您好？",
+      "reply": "你好，是帕普家的小兒子嗎？",
+      "next": "corn_2"
+    },
+    {
+      "id": "corn_2",
+      "type": "phone_dialogue",
+      "speaker": "寇恩",
+      "text": "我是帕普寇恩沒錯，請問你們是？",
+      "teamInput": true,
+      "next": "corn_3"
+    },
+    {
+      "id": "corn_3",
+      "type": "phone_dialogue",
+      "speaker": "你們",
+      "text": "我們是 {{team}}，是來幫你尋找你的家人的。",
+      "reply": "送出訊息",
+      "next": "corn_4"
+    },
+    {
+      "id": "corn_4",
+      "type": "phone_dialogue",
+      "speaker": "寇恩",
+      "text": "真的嗎？太感謝你們了！你們有找到什麼線索嗎？",
+      "reply": "目前沒有，我們打算到光之電影院找找看有什麼線索",
+      "next": "corn_5"
+    },
+    {
+      "id": "corn_5",
+      "type": "phone_dialogue",
+      "speaker": "寇恩",
+      "text": "很有道理，我也正打算過去，那我們等等在光之電影院見面嗎？",
+      "reply": "沒問題",
+      "next": "open_box"
+    },
+    {
+      "id": "open_box",
+      "type": "theater_gate"
+    },
+    {
+      "id": "theater_hub",
+      "type": "theater_hub"
+    },
+    {
+      "id": "hotdog_dialogue",
+      "type": "character_dialogue",
+      "location": "驗票口",
+      "character": "哈斗哥",
+      "lines": [
+        {
+          "speaker": "哈斗哥",
+          "text": "現在開放進場的是近期熱映的香港電影《沒有人付錢》！"
+        },
+        {
+          "speaker": "寇恩",
+          "text": "我們想來問有關我家米花的事情！"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "哎呀！狗沒拿賽！"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "我也很想幫忙，但你們這樣沒頭沒尾的問我，我實在不知道怎麼幫助你們。"
+        },
+        {
+          "speaker": "你們",
+          "text": "你對昨天來看電影的爆米花有印象嗎？"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "有啊！他們就是一群白白的可愛小傢伙！"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "聞起來有焦糖、巧克力、起司、奶油的味道。"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "如何？是你們要找的爆米花嗎？"
+        },
+        {
+          "speaker": "你們",
+          "text": "聽起來就像是對所有爆米花的敘述一樣⋯⋯"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "哈哈哈哈哈！說得也是！我真是粗心大意呢！"
+        },
+        {
+          "speaker": "寇恩",
+          "text": "那請您讓我進去，我自己去找！"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "呀勒呀勒！不可以得斯！"
+        },
+        {
+          "speaker": "哈斗哥",
+          "text": "要進去的話一定得買票才行！"
+        }
+      ],
+      "next": "theater_hub"
+    },
+    {
+      "id": "churro_dialogue",
+      "type": "character_dialogue",
+      "location": "售票口",
+      "character": "丘洛",
+      "lines": [
+        {
+          "speaker": "丘洛",
+          "text": "歡迎來光之電影院，幾位？要看什麼電影？"
+        },
+        {
+          "speaker": "寇恩",
+          "text": "請問妳有看到我的家米花嗎？"
+        },
+        {
+          "speaker": "丘洛",
+          "text": "啊？誰知道你家拿棒是誰啊？"
+        },
+        {
+          "speaker": "寇恩",
+          "text": "就是這些爆米花。"
+        },
+        {
+          "speaker": "丘洛",
+          "text": "沒印象。"
+        },
+        {
+          "speaker": "寇恩",
+          "text": "那妳知道昨天的爆米花看了什麼電影嗎？"
+        },
+        {
+          "speaker": "丘洛",
+          "text": "拜託，我怎麼會知道？"
+        },
+        {
+          "speaker": "丘洛",
+          "text": "你知道一整天下來，來看電影的爆米花有幾顆嗎？"
+        },
+        {
+          "speaker": "你們",
+          "text": "丘洛小姐，能不能請妳提供一些線索？"
+        },
+        {
+          "speaker": "你們",
+          "text": "寇恩真的很著急想要找到他的家人。"
+        },
+        {
+          "speaker": "丘洛",
+          "text": "好吧。"
+        },
+        {
+          "speaker": "丘洛",
+          "text": "這裡有一張電影簡介表，也許你們能從中找看看有沒有什麼線索。"
+        }
+      ],
+      "next": "movie_guide_reward"
+    },
+    {
+      "id": "movie_guide_reward",
+      "type": "reward",
+      "item": "電影簡介表",
+      "next": "reward_end"
+    },
+    {
+      "id": "reward_end",
+      "type": "reward_end"
+    }
   ]
 };

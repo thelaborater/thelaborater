@@ -1,19 +1,16 @@
-# 上傳方式
-將這個資料夾內的 5 個檔案放到 GitHub Repository 根目錄：
-- index.html
-- styles.css
-- app.js
-- game-data.js
-- netlify.toml
+# POP UP！光之電影院更新版
 
-Netlify 若已連接該 Repository，Commit 後會自動部署。
+## 本次更新
+- 尋人啟事背景照片改為由上往下飄落。
+- 全站改為手機優先，平板與桌面為輔。
+- 新增「請打開盒子，進入光之電影院」黑暗發光轉場。
+- 新增進入電影院的 Zoom In 動畫。
+- 新增光之電影院大廳：左售票口、右驗票口、中央紅地毯。
+- 可輸入「哈斗哥」或「丘洛」觸發不同對話。
+- 每一句台詞都需點擊對話框才會繼續。
+- 說話角色亮起；未說話角色變暗；玩家發言時兩位角色都變暗。
+- 丘洛對話結束後顯示「獲得電影簡介表」。
 
-# QR 測試網址
-部署後可使用：
-- ?qr=START
-- ?qr=CONTACT
-- ?qr=THEATER
-- ?qr=HALL18
-
-例如：https://你的網站.netlify.app/?qr=THEATER
-QR Code 內容應放「完整網址」。
+## 更新方式
+將六個檔案全部覆蓋到 GitHub Repository 根目錄後 Commit。
+Netlify 顯示 Published 後，以無痕視窗測試。
