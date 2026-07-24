@@ -1,6 +1,7 @@
 (() => {
 const app=document.getElementById("app"),data=window.GAME_DATA,scenes=Object.fromEntries(data.scenes.map(s=>[s.id,s]));
-const S1="popup_scene",S2="popup_team";const norm=v=>String(v??"").trim().replace(/\s+/g,"").toLowerCase();const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
+const S1="popup_scene_v2",S2="popup_team_v2";
+localStorage.removeItem("popup_scene");localStorage.removeItem("popup_team");const norm=v=>String(v??"").trim().replace(/\s+/g,"").toLowerCase();const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[c]));
 let state={sceneId:localStorage.getItem(S1)||"start",team:localStorage.getItem(S2)||""};
 const save=()=>{localStorage.setItem(S1,state.sceneId);localStorage.setItem(S2,state.team)};const go=id=>{state.sceneId=id;save();render();scrollTo({top:0,behavior:"smooth"})};const fill=t=>String(t??"").replaceAll("{{team}}",state.team||"OO");
 const top=()=>`<div class="topbar"><div class="logo">🍿 POP UP</div><div class="progress">進度 ${Math.max(0,Math.round(data.scenes.findIndex(s=>s.id===state.sceneId)/(data.scenes.length-1)*100))}%</div></div>`;

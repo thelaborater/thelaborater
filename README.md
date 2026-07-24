@@ -1,16 +1,19 @@
-## Hi there 👋
+# 上傳方式
+將這個資料夾內的 5 個檔案放到 GitHub Repository 根目錄：
+- index.html
+- styles.css
+- app.js
+- game-data.js
+- netlify.toml
 
-<!--
-**thelaborater/thelaborater** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Netlify 若已連接該 Repository，Commit 後會自動部署。
 
-Here are some ideas to get you started:
+# QR 測試網址
+部署後可使用：
+- ?qr=START
+- ?qr=CONTACT
+- ?qr=THEATER
+- ?qr=HALL18
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+例如：https://你的網站.netlify.app/?qr=THEATER
+QR Code 內容應放「完整網址」。
