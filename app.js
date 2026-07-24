@@ -2,7 +2,7 @@
 (() => {
   const app = document.getElementById("app");
   const D = window.GAME_DATA;
-  const KEY = "popup_v5_state";
+  const KEY = "popup_v6_state";
   const defaultState = {
     scene: "missing",
     team: "",
@@ -20,10 +20,12 @@
     foundObjects: []
   };
   let state = {...defaultState, ...(JSON.parse(localStorage.getItem(KEY) || "{}"))};
+  let hintAttentionTimer = null;
 
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
   const norm = s => String(s ?? "").trim().replace(/\s+/g,"").toLowerCase();
   const playerName = () => state.team || "你們";
+  const shuffled = values => [...values].sort(() => Math.random() - 0.5);
   const fill = s => String(s ?? "").replaceAll("{{team}}", playerName());
   const save = () => localStorage.setItem(KEY, JSON.stringify(state));
   const go = scene => { state.scene = scene; save(); render(); window.scrollTo({top:0, behavior:"smooth"}); };
@@ -160,7 +162,7 @@
     boatsSpark2: {
       title:"靈光二閃",
       small:"膠片要怎麼操作？",
-      body:"膠片整理好就是疊再一起吧？"
+      body:"膠片整理好就是疊在一起吧？"
     },
     rollingSpark1: {
       title:"靈光一閃",
@@ -179,9 +181,17 @@
   }
 
   function bindHintButtons() {
-    document.querySelectorAll("[data-hint]").forEach(btn => {
+    clearTimeout(hintAttentionTimer);
+    const buttons = [...document.querySelectorAll("[data-hint]")];
+    buttons.forEach(btn => {
+      btn.classList.remove("hint-attention");
       btn.onclick = () => openHintMenu(btn.dataset.hint);
     });
+    if(buttons.length){
+      hintAttentionTimer = setTimeout(() => {
+        buttons.forEach(btn => btn.classList.add("hint-attention"));
+      }, 20 * 60 * 1000);
+    }
   }
 
   function openHintMenu(key) {
@@ -205,7 +215,7 @@
       if(id.startsWith("note")) showNotebook(id, key, false);
       else confirmHint(id, key);
     });
-    document.querySelector("[data-hint-answer]")?.addEventListener("click", () => showAnswerNote(key));
+    document.querySelector("[data-hint-answer]")?.addEventListener("click", () => confirmAnswer(key));
   }
 
   function closeHint() {
@@ -246,6 +256,17 @@
   function openHintMenuAfterReplace(key) {
     closeHint();
     openHintMenu(key);
+  }
+
+  function confirmAnswer(key) {
+    document.getElementById("hintOverlay").innerHTML = `
+      <section class="hint-menu-card">
+        <button class="hint-close" id="hintClose">×</button>
+        <div class="hint-title">確定要觀看答案嗎？</div>
+        <button class="hint-confirm" id="answerConfirm">確定</button>
+      </section>`;
+    document.getElementById("hintClose").onclick = closeHint;
+    document.getElementById("answerConfirm").onclick = () => showAnswerNote(key);
   }
 
   function showAnswerNote(key) {
@@ -532,7 +553,7 @@
     answerScreen("他們看的場次就是⋯⋯","17:20","好像不是這個時間呢",()=>{
       state.solvedTime=true;save();
       runDialogue([["寇恩","原來如此！那我們趕快去影廳內看看？"]], ()=>go("hub"), "corn");
-    },["1720","下午5:20","下午0520","下午5點20分"],"time");
+    },["1720","下午5:20","下午0520","下午5點20分","5:20PM","05:20PM","0520PM","PM5:20","PM05:20","PM0520"],"time");
   }
 
   function renderChurroRepeat() {
@@ -611,7 +632,7 @@
     document.querySelectorAll("[data-seat]").forEach(btn=>btn.onclick=()=>{state.activeSeat=btn.dataset.seat;save();go("seatEditor");});
     document.getElementById("checkSeats").onclick=()=>{
       if(Object.keys(state.seats).length<8){
-        runDialogue([["寇恩","好像不太對耶。"]],()=>go("seatMap"),"corn");
+        runDialogue([["寇恩","你根本還沒核對完大家的身份嘛！"]],()=>go("seatMap"),"corn");
         return;
       }
       const all=Object.entries(D.seats).every(([id,s])=>state.seats[id]?.person===s.person && state.seats[id]?.item===s.missing);
@@ -622,11 +643,11 @@
 
   function renderSeatEditor() {
     const id=state.activeSeat, existing=state.seats[id]||{};
-    const people=[...new Set(Object.values(D.seats).map(x=>x.person))];
+    const people=shuffled([...new Set(Object.values(D.seats).map(x=>x.person))]);
 
     function itemOptions(person, selected="") {
       const seatData = Object.values(D.seats).find(x=>x.person===person);
-      const items = seatData ? seatData.items : [];
+      const items = shuffled(seatData ? seatData.items : []);
       return `<option value="">請選擇</option>` + items.map(v=>`<option ${v===selected?"selected":""}>${esc(v)}</option>`).join("");
     }
 
@@ -679,9 +700,8 @@
   }
 
   function renderObjectAnswer2() {
-    const missing = state.foundObjects.includes("envelope") ? "膠片" : "信封袋";
     answerScreen("再找找看，還有什麼？","","好像不是這個⋯⋯",()=>{},[],"filmName");
-    document.getElementById("answerInput").placeholder = `還沒找到的物品：${missing}`;
+    document.getElementById("answerInput").placeholder = "請輸入你找到的物品";
     document.getElementById("answerBtn").onclick=()=>handleObjectDiscovery(document.getElementById("answerInput").value);
   }
 
